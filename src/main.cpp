@@ -10,6 +10,26 @@
 // | 15 OE  | GND 16|      | Czarny         | xxx            |        15 | GND
 // -------------------
 
+#define _DEBUG_ // comment this line to disable debug output
+
+// debugging macros
+#ifdef _DEBUG_
+#define SerialD Serial
+#define _DEGUB_MESSAGE(a)               \
+    SerialD.print(millis()); \
+    SerialD.print(": ");     \
+    SerialD.println(a)
+#define _DEGUB_PRINT(a) SerialD.print(a)
+#define _DEGUB_PRINTLINE(a) SerialD.println(a)
+#define _DEGUB_PRINTHEX(a) SerialD.println(a, HEX)
+#else
+#define _DEGUB_MESSAGE(a)
+#define _DEGUB_PRINT(a)
+#define _DEGUB_PRINTLINE(a)
+#define _DEGUB_PRINTHEX(a)
+#endif
+// end of debugging macros
+
 #define R1_PIN_DEFAULT 25
 #define G1_PIN_DEFAULT 26
 #define B1_PIN_DEFAULT 27
