@@ -1,15 +1,21 @@
-# load images from this folder and convert them to hex bitmaps for use in C code, output is a list of 0x00 arrays
-
 import os
+import cv2
 
 output = []
 
 for img in os.listdir("./"):
     if img.endswith(".png"):
-        with open(img, "rb") as f:
-            data = f.read()
-            output.append("0x" + ", 0x".join([format(x, "02x") for x in data]))
-
+        hex_array = []
+        image = cv2.imread(img)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        # loop every pixel
+        height, width, _ = image.shape
+        for y in range(height):
+            for x in range(width):
+                # combine rgb to single hex
+                hex_array.append("0x" + format(image[y, x][0], "02x") + format(image[y, x][1], "02x") + format(image[y, x][2], "02x"))
+        output.append(hex_array)
 
 with open("output.txt", "w") as f:
-    f.write(str(output))
+    # write to file, stripping ', replace [ and ] with { and }
+    f.write("{" + str(output).strip("[]").replace("'", "").replace("[", "{").replace("]", "}") + "}")
