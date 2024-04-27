@@ -47,8 +47,8 @@
 #define OE_PIN_DEFAULT 15
 #define CLK_PIN_DEFAULT 16
 
-#include <ESP32-VirtualMatrixPanel-I2S-DMA.h>
 #include <frame_data.h>
+#include <ESP32-VirtualMatrixPanel-I2S-DMA.h>
 
 // MatrixPanel_I2S_DMA dma_display;
 MatrixPanel_I2S_DMA *dma_display = nullptr;
