@@ -3,9 +3,11 @@ import cv2
 
 color_array = []
 pixel_array = []
+frame_count = 0
 
 for img in os.listdir("./"):
     if img.endswith(".png"):
+        frame_count += 1
 
         image = cv2.imread(img)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -29,5 +31,6 @@ print(f" len pixel_array: {len(pixel_array)} -> {pixel_array[:10]}...")
 with open("../src/frame_data.cpp", "w") as f:
     # write to file, strip ', replace [ and ] with { and }
     f.write("""#include "frame_data.h"\n""")
+    f.write(f"""const uint16_t frame_count = {frame_count};\n""")
     f.write(f"""const uint16_t color_array[] = {{{str(color_array)[1:-1].replace("'","")}}};\n""")
     f.write(f"""const uint16_t pixel_array[] = {{{str(pixel_array)[1:-1]}}};\n""")

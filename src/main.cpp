@@ -30,37 +30,13 @@
 // #endif
 // // end of debugging macros
 
-#define R1_PIN_DEFAULT 25
-#define G1_PIN_DEFAULT 26
-#define B1_PIN_DEFAULT 27
-#define R2_PIN_DEFAULT 14
-#define G2_PIN_DEFAULT 12
-#define B2_PIN_DEFAULT 13
-
-#define A_PIN_DEFAULT 23
-#define B_PIN_DEFAULT 19
-#define C_PIN_DEFAULT 5
-#define D_PIN_DEFAULT 17
-#define E_PIN_DEFAULT -1
-
-#define LAT_PIN_DEFAULT 4
-#define OE_PIN_DEFAULT 15
-#define CLK_PIN_DEFAULT 16
-
+#include <esp_config.h>
 #include <frame_data.h>
 #include <ESP32-VirtualMatrixPanel-I2S-DMA.h>
 
 // MatrixPanel_I2S_DMA dma_display;
 MatrixPanel_I2S_DMA *dma_display = nullptr;
 VirtualMatrixPanel *virtualDisp = nullptr;
-
-#define PANEL_RES_X 64 // Number of pixels wide of each INDIVIDUAL panel module.
-#define PANEL_RES_Y 32 // Number of pixels tall of each INDIVIDUAL panel module.
-
-#define NUM_ROWS 2                     // Number of rows of chained INDIVIDUAL PANELS
-#define NUM_COLS 1                     // Number of INDIVIDUAL PANELS per ROW
-#define PANEL_CHAIN NUM_ROWS *NUM_COLS // total number of panels chained one to another
-#define VIRTUAL_MATRIX_CHAIN_TYPE CHAIN_BOTTOM_LEFT_UP
 
 struct rgb24
 {
@@ -112,11 +88,25 @@ rgb24 hue2rgb(uint8_t hue)
     return rgb;
 }
 
+#include <FastLED.h>
+
+uint16_t time_counter = 0, cycles = 0, fps = 0;
+unsigned long fps_timer;
+
+CRGB currentColor;
+CRGBPalette16 palettes[] = {HeatColors_p, LavaColors_p, RainbowColors_p, RainbowStripeColors_p, CloudColors_p};
+CRGBPalette16 currentPalette = palettes[0];
+
+CRGB ColorFromCurrentPalette(uint8_t index = 0, uint8_t brightness = 255, TBlendType blendType = LINEARBLEND)
+{
+    return ColorFromPalette(currentPalette, index, brightness, blendType);
+}
+
 void setup()
 {
-    // Serial.begin(115200);
-    // delay(1000);
-    // Serial.println("Starting...");
+    Serial.begin(115200);
+    delay(1000);
+    Serial.println("Starting...");
 
     HUB75_I2S_CFG mxconfig(
         PANEL_RES_X,
@@ -138,6 +128,9 @@ void setup()
 
     virtualDisp = new VirtualMatrixPanel((*dma_display), NUM_ROWS, NUM_COLS, PANEL_RES_X, PANEL_RES_Y, VIRTUAL_MATRIX_CHAIN_TYPE);
     virtualDisp->fillScreen(virtualDisp->color444(0, 0, 0));
+
+    currentPalette = RainbowColors_p;
+    fps_timer = millis();
 }
 
 const int rectWidth = 16;
@@ -183,6 +176,8 @@ uint8_t r, g, b;
 uint8_t frame = 0;
 void loop()
 {
+    Serial.print("frame ");
+    Serial.println(frame);
     dma_display->setBrightness8(3); // range is 0-255, 0 - 0%, 255 - 100%
     for (int y = 0; y <= 63; y++)
     {
@@ -192,7 +187,46 @@ void loop()
             virtualDisp->drawPixel(x, y, virtualDisp->color565(r, g, b));
         }
     }
-    frame = (frame + 1) % 16;
+    frame = (frame + 1) % frame_count;
     delay(33);
     virtualDisp->fillScreen(virtualDisp->color444(0, 0, 0));
 }
+
+// void loop()
+// {
+//     dma_display->setBrightness8(20); // range is 0-255, 0 - 0%, 255 - 100%
+//     for (int x = 0; x < 64; x++)
+//     {
+//         for (int y = 0; y < 64; y++)
+//         {
+//             int16_t v = 0;
+//             uint8_t wibble = sin8(time_counter);
+//             v += sin16(x * wibble * 3 + time_counter);
+//             v += cos16(y * (128 - wibble) + time_counter);
+//             v += sin16(y * x * cos8(-time_counter) / 8);
+
+//             currentColor = ColorFromPalette(currentPalette, (v >> 8) + 127); //, brightness, currentBlendType);
+//             virtualDisp->drawPixelRGB888(x, y, currentColor.r, currentColor.g, currentColor.b);
+//         }
+//     }
+
+//     ++time_counter;
+//     ++cycles;
+//     ++fps;
+
+//     if (cycles >= 1024)
+//     {
+//         time_counter = 0;
+//         cycles = 0;
+//         currentPalette = palettes[random(0, sizeof(palettes) / sizeof(palettes[0]))];
+//     }
+
+//     // print FPS rate every 5 seconds
+//     // Note: this is NOT a matrix refresh rate, it's the number of data frames being drawn to the DMA buffer per second
+//     if (fps_timer + 5000 < millis())
+//     {
+//         Serial.printf_P(PSTR("Effect fps: %d\n"), fps / 5);
+//         fps_timer = millis();
+//         fps = 0;
+//     }
+// } // end loop
