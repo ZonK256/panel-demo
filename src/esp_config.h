@@ -1,5 +1,5 @@
-// #define ESP32_WROOM_32
-#define ESP32_S3
+#define ESP32_WROOM_32
+// #define ESP32_S3
 
 #define PANEL_RES_X 64 // Number of pixels wide of each INDIVIDUAL panel module.
 #define PANEL_RES_Y 32 // Number of pixels tall of each INDIVIDUAL panel module.

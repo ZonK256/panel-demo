@@ -173,17 +173,22 @@ rgb24 color = hue2rgb(0);
 // }
 
 uint8_t r, g, b;
+uint16_t pixel_data;
 uint8_t frame = 0;
 void loop()
 {
     Serial.print("frame ");
     Serial.println(frame);
-    dma_display->setBrightness8(3); // range is 0-255, 0 - 0%, 255 - 100%
+    dma_display->setBrightness8(100); // range is 0-255, 0 - 0%, 255 - 100%
     for (int y = 0; y <= 63; y++)
     {
         for (int x = 0; x <= 63; x++)
         {
-            r = color_array[pixel_array[frame * 64 * 64 + y * 64 + x]];
+            pixel_data = color_array[pixel_array[frame * 64 * 64 + y * 64 + x]];
+            // extract channels from 16-bit color in 5-6-5 format
+            r = (pixel_data & 0xF800) >> 8;
+            g = (pixel_data & 0x07E0) >> 3;
+            b = (pixel_data & 0x001F) << 3;
             virtualDisp->drawPixel(x, y, virtualDisp->color565(r, g, b));
         }
     }
