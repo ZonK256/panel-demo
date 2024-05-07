@@ -1,5 +1,4 @@
-#define ESP32_WROOM_32
-// #define ESP32_S3
+#pragma once
 
 #define PANEL_RES_X 64 // Number of pixels wide of each INDIVIDUAL panel module.
 #define PANEL_RES_Y 32 // Number of pixels tall of each INDIVIDUAL panel module.
@@ -9,7 +8,7 @@
 #define PANEL_CHAIN NUM_ROWS *NUM_COLS // total number of panels chained one to another
 #define VIRTUAL_MATRIX_CHAIN_TYPE CHAIN_BOTTOM_LEFT_UP
 
-#ifdef ESP32_WROOM_32
+#ifdef ESP32_WROOM_32 // Defined in platformio.ini if using ESP32-WROOM-32
 #define R1_PIN_DEFAULT 25
 #define G1_PIN_DEFAULT 26
 #define B1_PIN_DEFAULT 27
@@ -28,7 +27,7 @@
 #define CLK_PIN_DEFAULT 16
 #endif
 
-#ifdef ESP32_S3
+#ifdef ESP32_S3 // Defined in platformio.ini if using ESP32-S3
 #define R1_PIN_DEFAULT 4
 #define G1_PIN_DEFAULT 5
 #define B1_PIN_DEFAULT 6
