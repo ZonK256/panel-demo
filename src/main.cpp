@@ -38,7 +38,8 @@ void setup()
     HUB75_I2S_CFG mxconfig(
         PANEL_RES_X,
         PANEL_RES_Y,
-        PANEL_CHAIN);
+        PANEL_CHAIN,
+        _pins);
     mxconfig.i2sspeed = mxconfig.HZ_20M;
     mxconfig.driver = mxconfig.SHIFTREG;
     mxconfig.clkphase = false;
