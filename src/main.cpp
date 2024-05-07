@@ -22,7 +22,7 @@
 #if TEST_PINS
 #include "../tests/pin_test.cpp"
 #else
-ExampleType example = IMAGE_SEQUENCE;
+ExampleType example = BOUNCING_LOGO;
 const uint8_t BRIGHTNESS = 100;
 
 MatrixPanel_I2S_DMA *dma_display = nullptr;
@@ -39,7 +39,7 @@ void setup()
         PANEL_RES_X,
         PANEL_RES_Y,
         PANEL_CHAIN);
-    mxconfig.i2sspeed = mxconfig.HZ_8M;
+    mxconfig.i2sspeed = mxconfig.HZ_20M;
     mxconfig.driver = mxconfig.SHIFTREG;
     mxconfig.clkphase = false;
     mxconfig.latch_blanking = 1;
@@ -59,7 +59,7 @@ void setup()
         setupHelloWorld(dma_display);
         break;
     case ExampleType::RAINBOW:
-        setupRainbow(virtualDisp);
+        setupRainbow(virtualDisp, dma_display);
         break;
     case ExampleType::IMAGE_SEQUENCE:
         setupImageSequence(virtualDisp);
@@ -81,7 +81,7 @@ void loop()
         loopHelloWorld(dma_display);
         break;
     case ExampleType::RAINBOW:
-        loopRainbow(virtualDisp);
+        loopRainbow(virtualDisp, dma_display);
         break;
     case ExampleType::IMAGE_SEQUENCE:
         loopImageSequence(virtualDisp);

@@ -4,7 +4,7 @@
 #define PANEL_RES_Y 32 // Number of pixels tall of each INDIVIDUAL panel module.
 
 #define NUM_ROWS 2                     // Number of rows of chained INDIVIDUAL PANELS
-#define NUM_COLS 1                     // Number of INDIVIDUAL PANELS per ROW
+#define NUM_COLS 3                     // Number of INDIVIDUAL PANELS per ROW
 #define PANEL_CHAIN NUM_ROWS *NUM_COLS // total number of panels chained one to another
 #define VIRTUAL_MATRIX_CHAIN_TYPE CHAIN_BOTTOM_LEFT_UP
 

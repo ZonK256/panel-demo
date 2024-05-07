@@ -7,6 +7,9 @@ uint8_t wheelval = 0;
 
 void setupHelloWorld(MatrixPanel_I2S_DMA *dma_display)
 {
+    dma_display->setBrightness8(255);
+    dma_display->fillRect(0, 0, dma_display->width(), dma_display->height(), dma_display->color444(255, 255, 255));
+    delay(5000);
     dma_display->fillRect(0, 0, dma_display->width(), dma_display->height(), dma_display->color444(0, 15, 0));
     delay(500);
 

@@ -13,8 +13,8 @@ enum ExampleType
 void setupHelloWorld(MatrixPanel_I2S_DMA *dma_display);
 void loopHelloWorld(MatrixPanel_I2S_DMA *dma_display);
 
-void setupRainbow(VirtualMatrixPanel *virtualDisp);
-void loopRainbow(VirtualMatrixPanel *virtualDisp);
+void setupRainbow(VirtualMatrixPanel *virtualDisp, MatrixPanel_I2S_DMA *dma_display);
+void loopRainbow(VirtualMatrixPanel *virtualDisp, MatrixPanel_I2S_DMA *dma_display);
 
 void setupImageSequence(VirtualMatrixPanel *virtualDisp);
 void loopImageSequence(VirtualMatrixPanel *virtualDisp);
