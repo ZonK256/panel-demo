@@ -9,39 +9,39 @@
 #define VIRTUAL_MATRIX_CHAIN_TYPE CHAIN_BOTTOM_LEFT_UP
 
 #ifdef ESP32_WROOM_32 // Defined in platformio.ini if using ESP32-WROOM-32
-#define R1_PIN_DEFAULT 25
-#define G1_PIN_DEFAULT 26
-#define B1_PIN_DEFAULT 27
-#define R2_PIN_DEFAULT 14
-#define G2_PIN_DEFAULT 12
-#define B2_PIN_DEFAULT 13
+#define R1 25
+#define G1 26
+#define BL1 27
+#define R2 14
+#define G2 12
+#define BL2 13
 
-#define A_PIN_DEFAULT 23
-#define B_PIN_DEFAULT 19
-#define C_PIN_DEFAULT 5
-#define D_PIN_DEFAULT 17
-#define E_PIN_DEFAULT -1
+#define CH_A 23
+#define CH_B 19
+#define CH_C 5
+#define CH_D 17
+#define CH_E -1
 
-#define LAT_PIN_DEFAULT 4
-#define OE_PIN_DEFAULT 15
-#define CLK_PIN_DEFAULT 16
+#define CLK 16
+#define LAT 4
+#define OE 15
 #endif
 
 #ifdef ESP32_S3 // Defined in platformio.ini if using ESP32-S3
-#define R1_PIN_DEFAULT 4
-#define G1_PIN_DEFAULT 5
-#define B1_PIN_DEFAULT 6
-#define R2_PIN_DEFAULT 7
-#define G2_PIN_DEFAULT 15
-#define B2_PIN_DEFAULT 46
+#define R1 4
+#define G1 5
+#define BL1 6
+#define R2 7
+#define G2 15
+#define BL2 46
 
-#define A_PIN_DEFAULT 8
-#define B_PIN_DEFAULT 16
-#define C_PIN_DEFAULT 3
-#define D_PIN_DEFAULT 17
-#define E_PIN_DEFAULT -1
+#define CH_A 8
+#define CH_B 16
+#define CH_C 3
+#define CH_D 17
+#define CH_E -1
 
-#define LAT_PIN_DEFAULT 18
-#define OE_PIN_DEFAULT 9
-#define CLK_PIN_DEFAULT 10
+#define CLK 12
+#define LAT 18
+#define OE 9
 #endif

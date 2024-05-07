@@ -9,6 +9,7 @@
 // | 13 CLK | LAT 14|      | Brązowy        | Szary          |        16 | 4
 // | 15 OE  | GND 16|      | Czarny         | xxx            |        15 | GND
 // -------------------
+#define TEST_PINS false
 
 #include "esp_config.h"
 #include "frame_data.h"
@@ -18,19 +19,27 @@
 #include <ESP32-HUB75-MatrixPanel-I2S-DMA.h>
 #include <FastLED.h>
 
-ExampleType example = RAINBOW;
+#if TEST_PINS
+#include "../tests/pin_test.cpp"
+#else
+ExampleType example = IMAGE_SEQUENCE;
 const uint8_t BRIGHTNESS = 100;
 
 MatrixPanel_I2S_DMA *dma_display = nullptr;
 VirtualMatrixPanel *virtualDisp = nullptr;
+#endif
 
 void setup()
 {
+#if TEST_PINS
+    testSetup();
+#else
+    HUB75_I2S_CFG::i2s_pins _pins = {R1, G1, BL1, R2, G2, BL2, CH_A, CH_B, CH_C, CH_D, CH_E, LAT, OE, CLK};
     HUB75_I2S_CFG mxconfig(
         PANEL_RES_X,
         PANEL_RES_Y,
         PANEL_CHAIN);
-    mxconfig.i2sspeed = mxconfig.HZ_20M;
+    mxconfig.i2sspeed = mxconfig.HZ_8M;
     mxconfig.driver = mxconfig.SHIFTREG;
     mxconfig.clkphase = false;
     mxconfig.latch_blanking = 1;
@@ -59,9 +68,13 @@ void setup()
         setupBouncingLogo(virtualDisp);
         break;
     }
+#endif
 }
 void loop()
 {
+#if TEST_PINS
+    testLoop();
+#else
     switch (example)
     {
     case ExampleType::HELLO_WORLD:
@@ -77,4 +90,5 @@ void loop()
         loopBouncingLogo(virtualDisp);
         break;
     }
+#endif
 }
