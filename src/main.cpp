@@ -22,7 +22,7 @@
 #if TEST_PINS
 #include "../tests/pin_test.cpp"
 #else
-ExampleType example = BOUNCING_LOGO;
+ExampleType example = RAINBOW;
 const uint8_t BRIGHTNESS = 100;
 
 MatrixPanel_I2S_DMA *dma_display = nullptr;
@@ -68,6 +68,12 @@ void setup()
     case ExampleType::BOUNCING_LOGO:
         setupBouncingLogo(virtualDisp);
         break;
+    case ExampleType::COLOR_TEST:
+        setupColorTest(virtualDisp);
+        break;
+    case ExampleType::ZDITM:
+        setupZDITM(virtualDisp);
+        break;
     }
 #endif
 }
@@ -89,6 +95,12 @@ void loop()
         break;
     case ExampleType::BOUNCING_LOGO:
         loopBouncingLogo(virtualDisp);
+        break;
+    case ExampleType::COLOR_TEST:
+        loopColorTest(virtualDisp);
+        break;
+    case ExampleType::ZDITM:
+        loopZDITM(virtualDisp);
         break;
     }
 #endif

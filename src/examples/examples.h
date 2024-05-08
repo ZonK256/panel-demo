@@ -7,7 +7,9 @@ enum ExampleType
     HELLO_WORLD,
     RAINBOW,
     IMAGE_SEQUENCE,
-    BOUNCING_LOGO
+    BOUNCING_LOGO,
+    COLOR_TEST,
+    ZDITM
 };
 
 void setupHelloWorld(MatrixPanel_I2S_DMA *dma_display);
@@ -21,3 +23,9 @@ void loopImageSequence(VirtualMatrixPanel *virtualDisp);
 
 void setupBouncingLogo(VirtualMatrixPanel *virtualDisp);
 void loopBouncingLogo(VirtualMatrixPanel *virtualDisp);
+
+void setupColorTest(VirtualMatrixPanel *virtualDisp);
+void loopColorTest(VirtualMatrixPanel *virtualDisp);
+
+void setupZDITM(VirtualMatrixPanel *virtualDisp);
+void loopZDITM(VirtualMatrixPanel *virtualDisp);
